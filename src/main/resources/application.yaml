@@ -1,0 +1,12 @@
+resilience4j:
+  retry:
+    instances:
+      directFallback:
+        max-attempts: 1
+        wait-duration: 0s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
