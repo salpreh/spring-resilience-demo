@@ -19,4 +19,9 @@ public class CircuitBreakerController {
     public TitledData<Integer> getDataWithNativeCB(@RequestParam(defaultValue = "false") boolean forceFail) {
         return circuitBreakerUseCase.nativeCircuitBreaker(forceFail);
     }
+
+    @GetMapping("spring")
+    public TitledData<Integer> getDataWithSpringCB(@RequestParam(defaultValue = "false") boolean forceFail) {
+        return circuitBreakerUseCase.springCircuitBreaker(forceFail);
+    }
 }

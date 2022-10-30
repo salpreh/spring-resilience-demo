@@ -2,20 +2,24 @@ package com.salpreh.resillencews.config;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
-import org.springframework.context.annotation.Bean;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 @Configuration
+@RequiredArgsConstructor
 public class CircuitBreakerCustomConfig {
 
     public static final String NATIVE_CB = "native";
+    public static final String SPRING_CB = "spring";
 
-    @Bean
+    private final CircuitBreakerRegistry registry;
+
+    @PostConstruct
     public CircuitBreakerRegistry nativeCircuitBreakerRegistry() {
-        var registry = CircuitBreakerRegistry.ofDefaults();
         addNativeCircuitBreaker(registry);
 
         return registry;

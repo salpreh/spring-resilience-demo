@@ -34,7 +34,7 @@ public class FallbackUseCase {
         return dataCalculatorService.getData(forceFail);
     }
 
-    private TitledData<Integer> errorFallback(boolean forceFail, RuntimeException t) {
+    private TitledData<Integer> errorFallback(boolean forceFail, Throwable t) {
         log.warn("Managed error in spring fallback", t);
         return dataCalculatorService.recoverFromError(t);
     }
