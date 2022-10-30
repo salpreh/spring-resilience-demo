@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -20,7 +18,7 @@ public class FallbackUseCase {
         return Try.ofSupplier(() -> {
             log.info("Executing native fallback");
 
-            return dataCalculatorService.getData(forceFail);
+            return dataCalculatorService.tryGetData(forceFail);
         }).recover(t -> {
             log.warn("Managed error in native fallback", t);
             return dataCalculatorService.recoverFromError(t);
@@ -31,7 +29,7 @@ public class FallbackUseCase {
     public TitledData<Integer> springFallback(boolean forceFail) {
         log.info("Executing spring fallback");
 
-        return dataCalculatorService.getData(forceFail);
+        return dataCalculatorService.tryGetData(forceFail);
     }
 
     private TitledData<Integer> errorFallback(boolean forceFail, Throwable t) {

@@ -11,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 
 @Configuration
 @RequiredArgsConstructor
-public class CircuitBreakerCustomConfig {
+public class CustomCircuitBreakerConfig {
 
     public static final String NATIVE_CB = "native";
     public static final String SPRING_CB = "spring";
@@ -19,7 +19,7 @@ public class CircuitBreakerCustomConfig {
     private final CircuitBreakerRegistry registry;
 
     @PostConstruct
-    public CircuitBreakerRegistry nativeCircuitBreakerRegistry() {
+    public CircuitBreakerRegistry registerConfigs() {
         addNativeCircuitBreaker(registry);
 
         return registry;

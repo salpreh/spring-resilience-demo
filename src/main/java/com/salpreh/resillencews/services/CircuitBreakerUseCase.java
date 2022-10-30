@@ -1,6 +1,6 @@
 package com.salpreh.resillencews.services;
 
-import com.salpreh.resillencews.config.CircuitBreakerCustomConfig;
+import com.salpreh.resillencews.config.CustomCircuitBreakerConfig;
 import com.salpreh.resillencews.models.TitledData;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -21,25 +21,27 @@ public class CircuitBreakerUseCase {
 
 
     public TitledData<Integer> nativeCircuitBreaker(boolean forceFail) {
-        log.info("Executing native CB");
 
-        Supplier<TitledData<Integer>> cbSupplier = cbRegistry.circuitBreaker(CircuitBreakerCustomConfig.NATIVE_CB)
-            .decorateSupplier(() -> dataCalculatorService.getData(forceFail));
+        Supplier<TitledData<Integer>> cbSupplier = cbRegistry.circuitBreaker(CustomCircuitBreakerConfig.NATIVE_CB)
+            .decorateSupplier(() -> {
+                log.info("Executing native CB");
+                return dataCalculatorService.tryGetData(forceFail);
+            });
 
-        Try<TitledData<Integer>> retrySupplier = Try.ofSupplier(cbSupplier)
+        Try<TitledData<Integer>> recoverSupplier = Try.ofSupplier(cbSupplier)
             .recover(t -> {
                 log.warn("Managed error in native CB", t);
                 return dataCalculatorService.recoverFromError(t);
             });
 
-        return retrySupplier.get();
+        return recoverSupplier.get();
     }
 
-    @CircuitBreaker(name = CircuitBreakerCustomConfig.SPRING_CB, fallbackMethod = "errorFallback")
+    @CircuitBreaker(name = CustomCircuitBreakerConfig.SPRING_CB, fallbackMethod = "errorFallback")
     public TitledData<Integer> springCircuitBreaker(boolean forceFail) {
         log.info("Executing spring CB");
 
-        return dataCalculatorService.getData(forceFail);
+        return dataCalculatorService.tryGetData(forceFail);
     }
 
     private TitledData<Integer> errorFallback(boolean forceFail, Throwable t) {

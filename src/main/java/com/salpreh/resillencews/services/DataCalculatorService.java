@@ -10,7 +10,11 @@ public class DataCalculatorService {
 
     private final Random random = new Random();
 
-    public TitledData<Integer> getData(boolean forceFail) {
+    public TitledData<Integer> getData(String title) {
+        return TitledData.build(title, 1);
+    }
+
+    public TitledData<Integer> tryGetData(boolean forceFail) throws RuntimeException {
         boolean fail = random.nextBoolean();
         if (forceFail || fail) throw new RuntimeException("It is a fail");
 
