@@ -14,16 +14,16 @@ import java.util.Random;
 @Log4j2
 public class FallbackUseCase {
 
-    public final Random random = new Random();
+    private final DataCalculatorService dataCalculatorService;
 
     public TitledData<Integer> nativeFallback(boolean forceFail) {
         return Try.ofSupplier(() -> {
             log.info("Executing native fallback");
 
-            return getData(forceFail);
+            return dataCalculatorService.getData(forceFail);
         }).recover(t -> {
-            log.warn("Error in native fallback", t);
-            return TitledData.build(t.getMessage(), 0);
+            log.warn("Managed error in native fallback", t);
+            return dataCalculatorService.recoverFromError(t);
         }).get();
     }
 
@@ -31,18 +31,11 @@ public class FallbackUseCase {
     public TitledData<Integer> springFallback(boolean forceFail) {
         log.info("Executing spring fallback");
 
-        return getData(forceFail);
+        return dataCalculatorService.getData(forceFail);
     }
 
     private TitledData<Integer> errorFallback(boolean forceFail, RuntimeException t) {
-        log.warn("Error in spring fallback", t);
-        return TitledData.build(t.getMessage(), 0);
-    }
-
-    private TitledData<Integer> getData(boolean forceFail) {
-        boolean fail = random.nextBoolean();
-        if (forceFail || fail) throw new RuntimeException("It is a fail");
-
-        return TitledData.build("fallback success", 1);
+        log.warn("Managed error in spring fallback", t);
+        return dataCalculatorService.recoverFromError(t);
     }
 }
