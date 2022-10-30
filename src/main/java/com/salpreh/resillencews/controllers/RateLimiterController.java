@@ -18,4 +18,9 @@ public class RateLimiterController {
     public TitledData<Integer> getDataWithNativeRL() {
         return rateLimiterUseCase.nativeRateLimiter();
     }
+
+    @GetMapping("spring")
+    public TitledData<Integer> getDataWithSpringRL() {
+        return rateLimiterUseCase.springRateLimiter();
+    }
 }

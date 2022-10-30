@@ -12,6 +12,12 @@ resilience4j:
         permitted-number-of-calls-in-half-open-state: 2
         sliding-window-size: 6
         minimum-number-of-calls: 3
+  ratelimiter:
+    instances:
+      spring:
+        limit-for-period: 4
+        timeout-duration: 5s
+        limit-refresh-period: 10s
 
 management:
   endpoints:
