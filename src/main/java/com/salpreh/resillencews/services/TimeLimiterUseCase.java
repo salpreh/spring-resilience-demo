@@ -28,9 +28,11 @@ public class TimeLimiterUseCase {
         return Try.ofSupplier(() -> {
                 try {
                     return tlRegistry.timeLimiter(CustomTimeLimiterConfig.NATIVE_TL)
-                        .executeFutureSupplier(() ->
-                            executeAsyncWithRandomDelay(() -> dataCalculatorService.getData("TimeLimiter call"), 2, 7)
-                        );
+                        .executeFutureSupplier(() -> dataCalculatorService.executeAsyncWithRandomDelay(
+                            "TimeLimiter call",
+                            2,
+                            7
+                        ));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -44,27 +46,12 @@ public class TimeLimiterUseCase {
 
     @TimeLimiter(name = CustomTimeLimiterConfig.SPRING_TL, fallbackMethod = "errorFallback")
     public CompletableFuture<TitledData<Integer>> springTimeLimiter() {
-        return executeAsyncWithRandomDelay(() -> dataCalculatorService.getData("TimeLimiter call"), 2, 7);
+        return dataCalculatorService.executeAsyncWithRandomDelay("TimeLimiter call", 2, 7);
     }
 
     private CompletableFuture<TitledData<Integer>> errorFallback(Throwable t) {
         log.warn("Time limit exceeded in spring TL");
 
         return CompletableFuture.completedFuture(dataCalculatorService.recoverFromError(t));
-    }
-
-    private <T> CompletableFuture<T> executeAsyncWithRandomDelay(Supplier<T> supplier, int minSeconds, int maxSeconds) {
-        int delaySecs = random.nextInt(maxSeconds - minSeconds + 1) + minSeconds;
-
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                log.info("Waiting {} seconds", delaySecs);
-                TimeUnit.SECONDS.sleep(delaySecs);
-
-                return supplier.get();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 }
