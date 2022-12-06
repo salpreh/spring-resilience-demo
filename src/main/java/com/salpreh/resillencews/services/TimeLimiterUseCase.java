@@ -2,7 +2,9 @@ package com.salpreh.resillencews.services;
 
 import com.salpreh.resillencews.config.CustomTimeLimiterConfig;
 import com.salpreh.resillencews.models.TitledData;
+import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterRegistry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -33,10 +36,21 @@ public class TimeLimiterUseCase {
                 }
             })
             .recover(t -> {
-                log.warn("Time limit exceeded  in native TL");
+                log.warn("Time limit exceeded in native TL");
                 return dataCalculatorService.recoverFromError(t);
             })
             .get();
+    }
+
+    @TimeLimiter(name = CustomTimeLimiterConfig.SPRING_TL, fallbackMethod = "errorFallback")
+    public CompletableFuture<TitledData<Integer>> springTimeLimiter() {
+        return executeAsyncWithRandomDelay(() -> dataCalculatorService.getData("TimeLimiter call"), 2, 7);
+    }
+
+    private CompletableFuture<TitledData<Integer>> errorFallback(Throwable t) {
+        log.warn("Time limit exceeded in spring TL");
+
+        return CompletableFuture.completedFuture(dataCalculatorService.recoverFromError(t));
     }
 
     private <T> CompletableFuture<T> executeAsyncWithRandomDelay(Supplier<T> supplier, int minSeconds, int maxSeconds) {

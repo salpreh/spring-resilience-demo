@@ -18,6 +18,11 @@ resilience4j:
         limit-for-period: 4
         timeout-duration: 5s
         limit-refresh-period: 10s
+  timelimiter:
+    instances:
+      spring:
+        timeout-duration: 5s
+        cancel-running-future: true
 
 management:
   endpoints:
