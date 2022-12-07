@@ -23,6 +23,11 @@ resilience4j:
       spring:
         timeout-duration: 5s
         cancel-running-future: true
+  bulkhead:
+    instances:
+      spring:
+        max-concurrent-calls: 4
+        max-wait-duration: 4s
 
 management:
   endpoints:
