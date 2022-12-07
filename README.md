@@ -1,10 +1,14 @@
 # spring-resilience-demo
 Basic SpringBoot project showing implementation of resilience patterns from [resilience4j](https://github.com/resilience4j/resilience4j).
+
 The project contains implementation using standalone library configuration and spring integration.
 For each pattern there is a controller with two endpoint to execute an example with native and spring version. For each pattern you can also find a dedicated configuration and use case class.
 
+A postman collection with the requests for all endpoints can be found at `/postman` folder.
+
 ## Implemented patterns
 - Fallback
+- Retry
 - Circuit breaker
 - Rate limiter
 - Time limiter
