@@ -20,11 +20,11 @@ public class DataCalculatorService {
         return TitledData.build(title, 1);
     }
 
-    public TitledData<Integer> tryGetData(boolean forceFail) throws RuntimeException {
+    public TitledData<Integer> tryGetData(String title, boolean forceFail) throws RuntimeException {
         boolean fail = random.nextBoolean();
         if (forceFail || fail) throw new RuntimeException("It is a fail");
 
-        return TitledData.build("fallback success", 1);
+        return TitledData.build(title, 1);
     }
 
     public TitledData<Integer> recoverFromError(Throwable t) {

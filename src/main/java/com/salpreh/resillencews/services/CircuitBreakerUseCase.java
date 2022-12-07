@@ -25,7 +25,7 @@ public class CircuitBreakerUseCase {
         Supplier<TitledData<Integer>> cbSupplier = cbRegistry.circuitBreaker(CustomCircuitBreakerConfig.NATIVE_CB)
             .decorateSupplier(() -> {
                 log.info("Executing native CB");
-                return dataCalculatorService.tryGetData(forceFail);
+                return dataCalculatorService.tryGetData("CircuitBreaker sucess", forceFail);
             });
 
         Try<TitledData<Integer>> recoverSupplier = Try.ofSupplier(cbSupplier)
@@ -41,7 +41,7 @@ public class CircuitBreakerUseCase {
     public TitledData<Integer> springCircuitBreaker(boolean forceFail) {
         log.info("Executing spring CB");
 
-        return dataCalculatorService.tryGetData(forceFail);
+        return dataCalculatorService.tryGetData("CircuitBreaker suecess", forceFail);
     }
 
     private TitledData<Integer> errorFallback(boolean forceFail, Throwable t) {

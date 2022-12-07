@@ -18,7 +18,7 @@ public class FallbackUseCase {
         return Try.ofSupplier(() -> {
             log.info("Executing native fallback");
 
-            return dataCalculatorService.tryGetData(forceFail);
+            return dataCalculatorService.tryGetData("Fallback success", forceFail);
         }).recover(t -> {
             log.warn("Managed error in native fallback", t);
             return dataCalculatorService.recoverFromError(t);
@@ -29,7 +29,7 @@ public class FallbackUseCase {
     public TitledData<Integer> springFallback(boolean forceFail) {
         log.info("Executing spring fallback");
 
-        return dataCalculatorService.tryGetData(forceFail);
+        return dataCalculatorService.tryGetData("Fallback success", forceFail);
     }
 
     private TitledData<Integer> errorFallback(boolean forceFail, Throwable t) {
