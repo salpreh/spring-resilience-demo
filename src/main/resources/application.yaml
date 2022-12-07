@@ -4,6 +4,9 @@ resilience4j:
       directFallback:
         max-attempts: 1
         wait-duration: 0s
+      spring:
+        max-attempts: 3
+        wait-duration: 200ms
   circuitbreaker:
     instances:
       spring:

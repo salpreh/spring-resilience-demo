@@ -18,4 +18,9 @@ public class RetryController {
     public TitledData<Integer> getWithNativeRetry(@RequestParam(defaultValue = "false") boolean forceFail) {
         return retryUseCase.nativeRetry(forceFail);
     }
+
+    @GetMapping("spring")
+    public TitledData<Integer> getWithSpringRetry(@RequestParam(defaultValue = "false") boolean forceFail) {
+        return retryUseCase.springRetry(forceFail);
+    }
 }
