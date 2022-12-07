@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "8632405d-bad6-4883-9747-f2d23269f9b9",
+		"name": "resilence4j",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4371815"
+	},
+	"item": [
+		{
+			"name": "fallback",
+			"item": [
+				{
+					"name": "nativeFallback",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/fallback/native",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fallback",
+								"native"
+							],
+							"query": [
+								{
+									"key": "forceFail",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "springFallback",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/fallback/spring",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fallback",
+								"spring"
+							],
+							"query": [
+								{
+									"key": "forceFail",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "retry",
+			"item": [
+				{
+					"name": "nativeRetry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/retry/native",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"retry",
+								"native"
+							],
+							"query": [
+								{
+									"key": "forceFail",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "springRetry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/retry/spring",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"retry",
+								"spring"
+							],
+							"query": [
+								{
+									"key": "forceFail",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "circuitbreaker",
+			"item": [
+				{
+					"name": "nativeCircuitbreaker",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/circuitbreaker/native?forceFail=true",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"circuitbreaker",
+								"native"
+							],
+							"query": [
+								{
+									"key": "forceFail",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "springCircuitbreaker",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/circuitbreaker/spring?forceFail=true",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"circuitbreaker",
+								"spring"
+							],
+							"query": [
+								{
+									"key": "forceFail",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ratelimiter",
+			"item": [
+				{
+					"name": "nativeRateLimiter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/ratelimiter/native",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"ratelimiter",
+								"native"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "springRateLimiter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/ratelimiter/spring",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"ratelimiter",
+								"spring"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "timelimiter",
+			"item": [
+				{
+					"name": "nativeRateLimiter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/timelimiter/native",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"timelimiter",
+								"native"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "springRateLimiter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/timelimiter/spring",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"timelimiter",
+								"spring"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bulkhead",
+			"item": [
+				{
+					"name": "nativeBulkhead",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/bulkhead/native",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"bulkhead",
+								"native"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "springBulkhead",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/bulkhead/spring",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"bulkhead",
+								"spring"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
